@@ -1,0 +1,61 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      "$room": {
+        ".read": "auth != null && (!data.exists() || data.child('meta/ownerUid').val() === auth.uid)",
+        ".write": "auth != null && ((!data.exists() && newData.child('meta/ownerUid').val() === auth.uid) || data.child('meta/ownerUid').val() === auth.uid)",
+        ".validate": "newData.hasChildren(['meta', 'engine', 'public']) && (!data.exists() || newData.child('meta/ownerUid').val() === data.child('meta/ownerUid').val())",
+        "meta": {
+          ".read": "auth != null",
+          "ownerUid": {".validate": "newData.isString() && (!data.exists() || newData.val() === data.val())"},
+          "heartbeat": {".validate": "newData.isNumber()"},
+          "createdAt": {".validate": "newData.isNumber()"},
+          "$other": {".validate": false}
+        },
+        "engine": {".validate": "newData.isString() && newData.val().length < 300000"},
+        "public": {".read": "auth != null"},
+        "seats": {
+          ".read": "auth != null",
+          "$role": {
+            ".write": "auth != null && !data.exists() && newData.child('uid').val() === auth.uid && root.child('rooms').child($room).child('public/stage').val() === 'lobby' && root.child('rooms').child($room).child('seats/0/uid').val() !== auth.uid && root.child('rooms').child($room).child('seats/1/uid').val() !== auth.uid && root.child('rooms').child($room).child('seats/2/uid').val() !== auth.uid && root.child('rooms').child($room).child('seats/3/uid').val() !== auth.uid && root.child('rooms').child($room).child('seats/4/uid').val() !== auth.uid && root.child('rooms').child($room).child('seats/5/uid').val() !== auth.uid",
+            ".validate": "($role === '0' || $role === '1' || $role === '2' || $role === '3' || $role === '4' || $role === '5') && newData.hasChildren(['uid','name'])",
+            "uid": {".validate": "newData.isString() && (!data.exists() || newData.val() === data.val())"},
+            "name": {".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 12"},
+            "$other": {".validate": false}
+          }
+        },
+        "private": {"$uid": {".read": "auth != null && auth.uid === $uid"}},
+        "receipts": {"$uid": {".read": "auth != null && auth.uid === $uid"}},
+        "inbox": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.exists() && (root.child('rooms').child($room).child('seats/0/uid').val() === auth.uid || root.child('rooms').child($room).child('seats/1/uid').val() === auth.uid || root.child('rooms').child($room).child('seats/2/uid').val() === auth.uid || root.child('rooms').child($room).child('seats/3/uid').val() === auth.uid || root.child('rooms').child($room).child('seats/4/uid').val() === auth.uid || root.child('rooms').child($room).child('seats/5/uid').val() === auth.uid)",
+            ".validate": "newData.hasChildren(['id','action','epoch','at'])",
+            "id": {".validate": "newData.isString() && newData.val().length <= 64"},
+            "action": {".validate": "newData.isString() && newData.val().length <= 30"},
+            "epoch": {".validate": "newData.isNumber()"},
+            "at": {".validate": "newData.isNumber()"},
+            "payload": {
+              "cardId": {".validate": "newData.isString() && newData.val().length <= 8"},
+              "target": {".validate": "newData.isNumber()"},
+              "claim": {".validate": "newData.isNumber()"},
+              "choice": {".validate": "newData.isString() && newData.val().length <= 16"},
+              "a": {".validate": "newData.isNumber()"},
+              "b": {".validate": "newData.isNumber()"},
+              "stage": {".validate": "newData.isString() && newData.val().length <= 16"},
+              "value": {".validate": "newData.isNumber()"},
+              "pair": {".validate": "newData.isNumber()"},
+              "delta": {".validate": "newData.isNumber()"},
+              "reason": {".validate": "newData.isString() && newData.val().length <= 80"},
+              "$other": {".validate": false}
+            },
+            "$other": {".validate": false}
+          }
+        },
+        "$other": {".validate": false}
+      }
+    }
+  }
+}

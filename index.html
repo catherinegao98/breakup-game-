@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f43e76"><meta name="description" content="情侣分手指南 · 六人朋友局，抽卡、传牌、交换礼物。">
+  <title>情侣分手指南 · 朋友局</title><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead"><a href="./" class="brand">分手<span>指南</span><small>THE BREAKUP SHOW</small></a><span class="edition">六人限定 · 朋友局</span></header>
+  <main>
+    <section id="welcome" class="welcome">
+      <div class="hero-copy"><p class="eyebrow">一档努力拆散情侣的节目</p><h1>今天，<br>能不能<span>分个手？</span></h1><p class="lede">三对情侣，六个嘴硬的人。<br>带上你的爆料，开始这场分手大作战。</p><div class="hero-tags"><span>6 人同局</span><span>玩家兼任 DM</span><span>手机直接玩</span></div></div>
+      <div class="entrance"><span class="ticket">入 场 券 / ADMIT SIX</span><h2>准备好上节目了吗</h2><p>一人创建房间，其余玩家输入房间号。</p><label for="room-code">房间号</label><input id="room-code" maxlength="8" placeholder="例如 LOVE2026" autocomplete="off" autocapitalize="characters"><button id="join" class="primary">加入朋友的房间 →</button><button id="create" class="secondary">我是兼任 DM，创建房间</button><div class="divider"><span>先看看怎么玩</span></div><button id="demo" class="text-button">打开单机演示 ↗</button><p id="setup-note" class="tiny"></p></div>
+    </section>
+    <section id="game" hidden>
+      <div class="room-bar"><div><p class="eyebrow" id="mode-label">朋友局 / LIVE</p><h2>房间 <span id="room-label"></span></h2></div><div class="room-tools"><button id="copy-room" class="secondary">复制邀请链接</button><button id="leave" class="text-button">退出页面</button></div></div>
+      <p id="connection" class="notice" role="status"></p>
+      <section id="seat-panel" class="panel"><p class="eyebrow">CHOOSE YOUR CHARACTER</p><h2>选好角色，准备开演</h2><p>每人一个角色；同一浏览器恢复原身份。</p><div id="seat-options" class="seat-grid"></div></section>
+      <div id="play-area" hidden>
+        <div class="player-line"><span id="identity"></span><span id="phase-label" class="pill"></span></div>
+        <div id="scores" class="scores"></div>
+        <nav id="tabs" class="tabs" aria-label="游戏区域"><button data-tab="table" class="active">当前节目</button><button data-tab="hand">我的手牌</button><button data-tab="library">规则与图片</button><button data-tab="history">节目记录</button><button data-tab="admin" id="admin-tab" hidden>DM 控台</button></nav>
+        <section id="tab-table" class="tab-content"></section>
+        <section id="tab-hand" class="tab-content" hidden></section>
+        <section id="tab-library" class="tab-content" hidden><div class="panel"><p class="eyebrow">REFERENCE DESK</p><h2>点一张，放大看</h2><p>规则和卡牌图片用于线下互动。美德打牌及航行行动在线下执行；网页提供查阅、事件抽取和记分。</p><div id="library-filters" class="filter-row"></div><div id="gallery" class="gallery"></div></div></section>
+        <section id="tab-history" class="tab-content" hidden></section>
+        <section id="tab-admin" class="tab-content" hidden></section>
+      </div>
+    </section>
+    <footer>情侣分手指南 · 私人朋友局辅助工具 <span>抽牌认真，分手随缘。</span></footer>
+  </main>
+  <dialog id="image-viewer"><button id="close-viewer" class="close" aria-label="关闭图片">×</button><img id="viewer-image" alt="卡牌大图"><p id="viewer-caption"></p></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body></html>
